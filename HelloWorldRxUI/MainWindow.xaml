@@ -5,9 +5,9 @@
     <StackPanel Orientation="Vertical" Margin="10">
         <DockPanel HorizontalAlignment="Stretch">
             <Label Target="{Binding ElementName=Name}" Padding="0 3 5 5">Your _name:</Label>
-            <TextBox x:Name="Name" Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox x:Name="Name" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
         </DockPanel>
-        <TextBlock x:Name="Greeting" Text="{Binding Path=Greeting}" Margin="0 10 0 0" Height="Auto"/>
+        <TextBlock x:Name="Greeting" Text="{Binding Greeting}" Margin="0 10 0 0" Height="Auto"/>
         <DockPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Button Width="75" Content="Continue" Margin="0 10 0 0"/>
         </DockPanel>
