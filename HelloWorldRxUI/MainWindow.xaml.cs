@@ -1,4 +1,7 @@
-﻿namespace HelloWorldRxUI
+﻿using System;
+using System.Windows;
+
+namespace HelloWorldRxUI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -9,6 +12,7 @@
         {
             InitializeComponent();
             DataContext = new AppViewModel();
+            (DataContext as AppViewModel).ContinueCommand.Subscribe(_ => MessageBox.Show("This is the end."));
         }
     }
 }

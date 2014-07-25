@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reactive.Linq;
-using System.Windows;
 using ReactiveUI;
 
 namespace HelloWorldRxUI
@@ -33,8 +32,6 @@ namespace HelloWorldRxUI
 
             ContinueCommand = ReactiveCommand.Create(
                 this.ObservableForProperty(x => x.Name, false, false).Select(x => !string.IsNullOrEmpty(x.Value)));
-
-            ContinueCommand.Subscribe(_ => MessageBox.Show("This is the end."));
         }
     }
 }
