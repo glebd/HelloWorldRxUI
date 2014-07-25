@@ -1,8 +1,15 @@
 ﻿<Window x:Class="HelloWorldRxUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="Hello World" Width="300" SizeToContent="Height">
+    <StackPanel Orientation="Vertical" Margin="10">
+        <DockPanel HorizontalAlignment="Stretch">
+            <Label Padding="0 3 5 5">Your _name:</Label>
+            <TextBox x:Name="Name"></TextBox>
+        </DockPanel>
+        <TextBlock x:Name="Greeting" Margin="0 10 0 0" Height="Auto"></TextBlock>
+        <DockPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button Width="75" Content="Continue" Margin="0 10 0 0"></Button>
+        </DockPanel>
+    </StackPanel>
 </Window>
