@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reactive.Linq;
+using System.Windows;
 using ReactiveUI;
 
 namespace HelloWorldRxUI
@@ -19,6 +21,8 @@ namespace HelloWorldRxUI
             set { this.RaiseAndSetIfChanged(ref _greeting, value); }
         }
 
+        public ReactiveCommand<object> ContinueCommand { get; set; }
+
         public AppViewModel()
         {
             this.ObservableForProperty(x => x.Name, false, false)
@@ -26,6 +30,11 @@ namespace HelloWorldRxUI
                 {
                     Greeting = "Hello " + (string.IsNullOrEmpty(x.Value) ? "stranger" : x.Value);
                 });
+
+            ContinueCommand = ReactiveCommand.Create(
+                this.ObservableForProperty(x => x.Name, false, false).Select(x => !string.IsNullOrEmpty(x.Value)));
+
+            ContinueCommand.Subscribe(_ => MessageBox.Show("This is the end."));
         }
     }
 }
