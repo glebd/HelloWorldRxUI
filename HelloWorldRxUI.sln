@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorldRxUI", "HelloWorldRxUI\HelloWorldRxUI.csproj", "{A4D13943-081E-4A9E-A1B9-10470B6F8846}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorldRxUITests", "HelloWorldRxUITests\HelloWorldRxUITests.csproj", "{488F10EC-65FA-4265-ABFB-0E34EACE3FB1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{A4D13943-081E-4A9E-A1B9-10470B6F8846}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4D13943-081E-4A9E-A1B9-10470B6F8846}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4D13943-081E-4A9E-A1B9-10470B6F8846}.Release|Any CPU.Build.0 = Release|Any CPU
+		{488F10EC-65FA-4265-ABFB-0E34EACE3FB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{488F10EC-65FA-4265-ABFB-0E34EACE3FB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{488F10EC-65FA-4265-ABFB-0E34EACE3FB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{488F10EC-65FA-4265-ABFB-0E34EACE3FB1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
