@@ -8,6 +8,8 @@
             <TextBox x:Name="Name" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
         </DockPanel>
         <TextBlock x:Name="Greeting" Text="{Binding Greeting}" Margin="0 10 0 0" Height="Auto"/>
+        <TextBlock x:Name="AsyncGreeting" Text="{Binding AsyncGreeting}" Margin="0 10 0 0" Height="Auto"/>
+        <ProgressBar Name="ProgressBar" Maximum="1.0" Value="{Binding Progress}" Margin="0 10 0 0" Height="10"/>
         <DockPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Button Width="75" Content="Continue" Margin="0 10 0 0" Command="{Binding ContinueCommand}"/>
         </DockPanel>

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using ReactiveUI;
 
 namespace HelloWorldRxUI
@@ -20,7 +22,21 @@ namespace HelloWorldRxUI
             set { this.RaiseAndSetIfChanged(ref _greeting, value); }
         }
 
-        public ReactiveCommand<object> ContinueCommand { get; set; }
+        private string _asyncGreeting;
+        public string AsyncGreeting
+        {
+            get { return _asyncGreeting; }
+            set { this.RaiseAndSetIfChanged(ref _asyncGreeting, value); }
+        }
+
+        private double _progress;
+        public double Progress
+        {
+            get { return _progress; }
+            set { this.RaiseAndSetIfChanged(ref _progress, value); }
+        }
+
+        public ReactiveCommand<string> ContinueCommand { get; set; }
 
         public AppViewModel()
         {
@@ -30,8 +46,25 @@ namespace HelloWorldRxUI
                     Greeting = "Hello " + (string.IsNullOrEmpty(x.Value) ? "stranger" : x.Value);
                 });
 
-            ContinueCommand = ReactiveCommand.Create(
-                this.ObservableForProperty(x => x.Name, false, false).Select(x => !string.IsNullOrEmpty(x.Value)));
+            ContinueCommand = ReactiveCommand.CreateAsyncTask(
+                this.ObservableForProperty(x => x.Name, false, false).Select(x => !string.IsNullOrEmpty(x.Value)),
+                (x, ct) => MakeGreetingAsync(Name, ct));
+        }
+
+        private async Task<string> MakeGreetingAsync(string name, CancellationToken ct)
+        {
+            return await Task.Run(() =>
+            {
+                AsyncGreeting = "Working...";
+                for (int i = 0; i < 10; ++i)
+                {
+                    Thread.Sleep(1000);
+                    Progress = (i + 1)*10/100.0;
+                }
+                var greeting = "Hello " + (string.IsNullOrEmpty(name) ? "stranger" : name);
+                AsyncGreeting = greeting;
+                return greeting;
+            }, ct);
         }
     }
 }
