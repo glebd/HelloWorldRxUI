@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,6 +39,8 @@ namespace HelloWorldRxUI
 
         public ReactiveCommand<string> ContinueCommand { get; set; }
 
+        public ReactiveCommand<object> StopCommand { get; set; }
+
         public AppViewModel()
         {
             this.ObservableForProperty(x => x.Name, false, false)
@@ -49,6 +52,10 @@ namespace HelloWorldRxUI
             ContinueCommand = ReactiveCommand.CreateAsyncTask(
                 this.ObservableForProperty(x => x.Name, false, false).Select(x => !string.IsNullOrEmpty(x.Value)),
                 (x, ct) => MakeGreetingAsync(Name, ct));
+
+            StopCommand = ReactiveCommand.Create(ContinueCommand.IsExecuting);
+
+            StopCommand.Subscribe(_ => Debug.Print("Stop button pressed"));
         }
 
         private async Task<string> MakeGreetingAsync(string name, CancellationToken ct)

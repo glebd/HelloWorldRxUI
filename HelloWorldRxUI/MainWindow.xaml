@@ -11,7 +11,8 @@
         <TextBlock x:Name="AsyncGreeting" Text="{Binding AsyncGreeting}" Margin="0 10 0 0" Height="Auto"/>
         <ProgressBar Name="ProgressBar" Maximum="1.0" Value="{Binding Progress}" Margin="0 10 0 0" Height="10"/>
         <DockPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <Button Width="75" Content="Continue" Margin="0 10 0 0" Command="{Binding ContinueCommand}"/>
+            <Button Width="75" Content="Continue" Margin="0 10 10 0" Command="{Binding ContinueCommand}"/>
+            <Button Width="75" Content="Stop" Margin="0 10 0 0" Command="{Binding StopCommand}"/>
         </DockPanel>
     </StackPanel>
 </Window>
