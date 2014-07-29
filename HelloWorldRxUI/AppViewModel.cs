@@ -60,15 +60,18 @@ namespace HelloWorldRxUI
 
         private async Task<string> MakeGreetingAsync(string name, CancellationToken ct)
         {
+            Progress = 0;
             return await Task.Run(() =>
             {
                 AsyncGreeting = "Working...";
-                for (int i = 0; i < 10; ++i)
+                for (int i = 0; i < 10 && !ct.IsCancellationRequested; ++i)
                 {
                     Thread.Sleep(1000);
                     Progress = (i + 1)*10/100.0;
                 }
-                var greeting = "Hello " + (string.IsNullOrEmpty(name) ? "stranger" : name);
+                if (ct.IsCancellationRequested)
+                    Progress = 0;
+                var greeting = ct.IsCancellationRequested ? "Cancelled!" : "Hello " + (string.IsNullOrEmpty(name) ? "stranger" : name);
                 AsyncGreeting = greeting;
                 return greeting;
             }, ct);
