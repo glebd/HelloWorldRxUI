@@ -53,6 +53,8 @@ namespace HelloWorldRxUI
                 this.ObservableForProperty(x => x.Name, false, false).Select(x => !string.IsNullOrEmpty(x.Value)),
                 (x, ct) => MakeGreetingAsync(Name, ct));
 
+            ContinueCommand.ObserveOn(RxApp.MainThreadScheduler).Subscribe(s => AsyncGreeting = s);
+
             StopCommand = ReactiveCommand.Create(ContinueCommand.IsExecuting);
 
             StopCommand.Subscribe(_ => Debug.Print("Stop button pressed"));
@@ -61,9 +63,9 @@ namespace HelloWorldRxUI
         private async Task<string> MakeGreetingAsync(string name, CancellationToken ct)
         {
             Progress = 0;
+            AsyncGreeting = "Working...";
             return await Task.Run(() =>
             {
-                AsyncGreeting = "Working...";
                 for (int i = 0; i < 10 && !ct.IsCancellationRequested; ++i)
                 {
                     Thread.Sleep(1000);
@@ -72,7 +74,6 @@ namespace HelloWorldRxUI
                 if (ct.IsCancellationRequested)
                     Progress = 0;
                 var greeting = ct.IsCancellationRequested ? "Cancelled!" : "Hello " + (string.IsNullOrEmpty(name) ? "stranger" : name);
-                AsyncGreeting = greeting;
                 return greeting;
             }, ct);
         }
