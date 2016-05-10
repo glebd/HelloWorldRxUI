@@ -1,6 +1,5 @@
 *.suo
 *.user
-*.resx
 obj
 Debug
 Release
