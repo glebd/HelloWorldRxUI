@@ -49,21 +49,18 @@ namespace HelloWorldRxUI
                     Greeting = "Hello " + (string.IsNullOrEmpty(x.Value) ? "stranger" : x.Value);
                 });
 
-            ContinueCommand = ReactiveCommand.CreateAsyncTask(
+            ContinueCommand = ReactiveCommand.CreateAsyncObservable(
                 this.ObservableForProperty(x => x.Name, false, false).Select(x => !string.IsNullOrEmpty(x.Value)),
-                (x, ct) => MakeGreetingAsync(Name, ct));
-
-            ContinueCommand.ObserveOn(RxApp.MainThreadScheduler).Subscribe(s => AsyncGreeting = s);
+                _ => Observable.FromAsync(LongTask).TakeUntil(StopCommand));
 
             StopCommand = ReactiveCommand.Create(ContinueCommand.IsExecuting);
 
-            StopCommand.Subscribe(_ => Debug.Print("Stop button pressed"));
+            ContinueCommand.ObserveOn(RxApp.MainThreadScheduler).Subscribe(s => AsyncGreeting = s);
         }
 
-        private async Task<string> MakeGreetingAsync(string name, CancellationToken ct)
+        private async Task<string> LongTask(CancellationToken ct)
         {
             Progress = 0;
-            AsyncGreeting = "Working...";
             return await Task.Run(() =>
             {
                 for (int i = 0; i < 10 && !ct.IsCancellationRequested; ++i)
@@ -72,8 +69,11 @@ namespace HelloWorldRxUI
                     Progress = (i + 1)*10/100.0;
                 }
                 if (ct.IsCancellationRequested)
+                {
+                    Debug.WriteLine("Cancellation requested");
                     Progress = 0;
-                var greeting = ct.IsCancellationRequested ? "Cancelled!" : "Hello " + (string.IsNullOrEmpty(name) ? "stranger" : name);
+                }
+                var greeting = ct.IsCancellationRequested ? "Cancelled!" : "Finished";
                 return greeting;
             }, ct);
         }
