@@ -4,8 +4,8 @@
         Title="Hello World" Width="300" SizeToContent="Height">
     <StackPanel Orientation="Vertical" Margin="10">
         <DockPanel HorizontalAlignment="Stretch">
-            <Label Target="{Binding ElementName=Name}" Padding="0 3 5 5">Your _name:</Label>
-            <TextBox x:Name="Name" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Target="{Binding ElementName=UserName}" Padding="0 3 5 5">Your _name:</Label>
+            <TextBox x:Name="UserName" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
         </DockPanel>
         <TextBlock x:Name="Greeting" Text="{Binding Greeting}" Margin="0 10 0 0" Height="Auto"/>
         <TextBlock x:Name="AsyncGreeting" Text="{Binding AsyncGreeting}" Margin="0 10 0 0" Height="Auto"/>
